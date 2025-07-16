@@ -12,6 +12,7 @@ import { ServiceRecord, Venue } from '../data/types';
 import "./ServiceVenuesPage.css";
 import { useCallback } from 'react';
 import FitBounds from '../components/FitBounds';
+import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
 
 interface Params { serviceId: string }
@@ -77,7 +78,7 @@ const ServiceVenuesPage: React.FC = () => {
                 position={[v.geo.lat, v.geo.lon] as L.LatLngTuple}
                 icon={makeIcon(idx + 1)}
                 eventHandlers={{
-                  click: () => history.push(`/venues/${v.id}`)
+                  click: () => history.push(`/venues/${v.id}/services/${serviceId}`)
                 }}
               >
                 <Popup>{v.name}</Popup>
@@ -94,7 +95,7 @@ const ServiceVenuesPage: React.FC = () => {
           : (
             <IonList>
               {venues.map((v, idx) => (
-                <IonItem key={v.id} routerLink={`/venues/${v.id}`}>
+                <IonItem key={v.id} routerLink={`/venues/${v.id}/services/${serviceId}`}>
                   <IonLabel>
                     <h2>{idx + 1}. {v.name}</h2>
                     <p>{v.address}</p>

@@ -34,6 +34,10 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import ServiceVenuesPage from './pages/ServiceVenuesPage';
+import ServiceBookingPage from './pages/ServiceBookingPage';
+import OAuthCallback from './pages/OAuthCallbackPage';
+import Auth from './pages/Auth';
+
 
 setupIonicReact();
 
@@ -52,6 +56,13 @@ const App: React.FC = () => (
           path="/services/:serviceId/venues"
           component={ServiceVenuesPage}
         />
+        <Route
+          exact
+          path="/venues/:vid/services/:sid"
+          component={ServiceBookingPage}
+        />
+        <Route exact path="/auth" component={Auth} />
+        <Route exact path="/oauth-callback" component={OAuthCallback} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
