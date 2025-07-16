@@ -1,0 +1,7 @@
+{
+  "name": "puria-points",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
