@@ -12,7 +12,6 @@ import { ServiceRecord, Venue } from '../data/types';
 import "./ServiceVenuesPage.css";
 import { useCallback } from 'react';
 import FitBounds from '../components/FitBounds';
-import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
 
 interface Params { serviceId: string }
@@ -28,8 +27,7 @@ const ServiceVenuesPage: React.FC = () => {
 
     try {
       const s: ServiceRecord = await pb.collection('services').getOne(serviceId, { expand: 'venue' });
-      setVenues(s.expand.venue);
-      console.log(s.expand?.venue)
+      setVenues(s.expand?.venue as Venue[]);
     } catch (err) {
       console.error(err);
     } finally {
@@ -41,7 +39,6 @@ const ServiceVenuesPage: React.FC = () => {
     loadVenues();
   }, [serviceId]);
 
-  // icona numerata (1,2,3…)
   const makeIcon = (n: number) =>
     L.divIcon({
       className: 'venue-pin',
@@ -70,7 +67,7 @@ const ServiceVenuesPage: React.FC = () => {
         {/* Mappa compatta: altezza 40% */}
         <div style={{ height: '40vh' }}>
           <MapContainer center={center as L.LatLngTuple} zoom={14} style={{ height: '100%' }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; Bari Città Aperta" />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; Bari città aperta" />
 
             {venues.map((v, idx) => v.geo && (
               <Marker
@@ -84,7 +81,12 @@ const ServiceVenuesPage: React.FC = () => {
                 <Popup>{v.name}</Popup>
               </Marker>
             ))}
-            <FitBounds coords={venues.map(v => v.geo)} />
+            <FitBounds
+              coords={venues
+                .filter(v => v.geo)
+                .map(v => [v.geo?.lat, v.geo?.lon] as [number, number])}
+            />
+
           </MapContainer>
 
         </div>

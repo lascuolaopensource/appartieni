@@ -1,14 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   IonContent, IonHeader, IonList, IonPage,
   IonRefresher, IonRefresherContent,
-  IonTitle, IonToolbar, useIonViewWillEnter
+  IonTitle, IonToolbar
 } from '@ionic/react';
 
 import { Service } from '../data/types';
 import { pb } from '../lib/pb';
 import ServiceListItem from '../components/ServiceListItem'; // cambia nome
 import './Home.css';
+import { IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react';
+import { heart } from 'ionicons/icons';
+
 
 const Home: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
@@ -27,8 +30,7 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  // on view enter
-  useIonViewWillEnter(loadServices);
+  useIonViewWillEnter(() => { loadServices() });
 
   // pull‑to‑refresh handler
   const refresh = async (e: CustomEvent) => {
@@ -44,11 +46,15 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
+      <IonContent fixedSlotPlacement="before">
+        <IonFab horizontal="end" vertical="bottom" slot="fixed">
+          <IonFabButton routerLink='/checkin'>
+            <IonIcon icon={heart}></IonIcon>
+          </IonFabButton>
+        </IonFab>
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent />
         </IonRefresher>
-
         {loading && <p className="ion-padding">Caricamento…</p>}
 
         <IonList>
@@ -56,8 +62,9 @@ const Home: React.FC = () => {
             <ServiceListItem key={s.id} service={s} />
           ))}
         </IonList>
+
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 };
 

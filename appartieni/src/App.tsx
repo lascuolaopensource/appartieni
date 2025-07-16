@@ -37,6 +37,7 @@ import ServiceVenuesPage from './pages/ServiceVenuesPage';
 import ServiceBookingPage from './pages/ServiceBookingPage';
 import OAuthCallback from './pages/OAuthCallbackPage';
 import Auth from './pages/Auth';
+import Checkin from './pages/CheckinPage';
 
 
 setupIonicReact();
@@ -62,6 +63,7 @@ const App: React.FC = () => (
           component={ServiceBookingPage}
         />
         <Route exact path="/auth" component={Auth} />
+        <Route exact path="/checkin" component={Checkin} />
         <Route exact path="/oauth-callback" component={OAuthCallback} />
       </IonRouterOutlet>
     </IonReactRouter>

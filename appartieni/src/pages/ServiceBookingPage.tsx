@@ -7,7 +7,6 @@ import {
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
-
 import { pb } from '../lib/pb';
 import { ServiceRecord, Venue } from '../data/types';
 
@@ -37,7 +36,12 @@ const ServiceBookingPage: React.FC = () => {
           expand: 'venue'
         });
         setService(s);
-        setVenue(s.expand?.venue as Venue);
+        const vExp = s.expand?.venue as Venue | Venue[] | undefined;
+
+        setVenue(
+          Array.isArray(vExp) ? vExp[0] ?? null
+            : vExp ?? null
+        );
       } catch (err) {
         console.error(err);
         setToast({ show: true, text: 'Errore nel caricamento del servizio' });
@@ -97,16 +101,14 @@ const ServiceBookingPage: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen className="ion-padding">
-        {/* Card with service + venue info */}
         <IonCard>
           <IonCardHeader>
             <IonCardSubtitle>{venue.name}</IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
-            {/* Safe HTML render */}
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(service.description || '<em>Nessuna descrizione</em>')
+                __html: DOMPurify.sanitize('<em>Nessuna descrizione</em>')
               }}
             />
           </IonCardContent>
