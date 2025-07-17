@@ -2,6 +2,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -48,27 +49,28 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/auth" component={Auth} />
+        <Route exact path="/oauth-callback" component={OAuthCallback} />
+        <Route path="/tutorial" component={TutorialPage} />
         <Route path="/" exact={true}>
           <Redirect to="/home" />
         </Route>
         <Route path="/home" exact={true}>
           <Home />
         </Route>
-        <Route
+
+        <ProtectedRoute
           exact
           path="/services/:serviceId/venues"
           component={ServiceVenuesPage}
         />
-        <Route
+        <ProtectedRoute
           exact
           path="/venues/:vid/services/:sid"
           component={ServiceBookingPage}
         />
-        <Route exact path="/auth" component={Auth} />
-        <Route exact path="/checkin" component={Checkin} />
-        <Route exact path="/oauth-callback" component={OAuthCallback} />
-        <Route exact path="/request-success/:reqId" component={RequestSuccessPage} />
-        <Route path="/tutorial" component={TutorialPage} />
+        <ProtectedRoute exact path="/checkin" component={Checkin} />
+        <ProtectedRoute exact path="/request-success/:reqId" component={RequestSuccessPage} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

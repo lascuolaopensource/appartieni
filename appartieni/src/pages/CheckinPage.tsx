@@ -9,6 +9,7 @@ import { Venue } from '../data/types';
 import { haversine } from '../lib/haversine';   // già creato prima
 import { getCurrentLocation } from '../lib/getLocation';
 import QRScannerView from '../components/QRScanner';
+import { performCheckin } from '../lib/performCheckin';
 
 const MAX_RADIUS_KM = 0.5;   // 500 m
 
@@ -37,13 +38,13 @@ export default function CheckinPage() {
 
   const handleCheckin = async (v: Venue) => {
     try {
-      await pb.collection('checkins').create({
-        venue_id: v.id,
-        geo: { lat: userPos![0], lon: userPos![1] }
+      const { pts } = await performCheckin(v, {
+        lat: userPos![0],
+        lon: userPos![1]
       });
-      setToast({ show: true, text: `Check‑in registrato (+Puria Points!)` });
-    } catch (e) {
-      console.error(e);
+      setToast({ show: true, text: `Check‑in registrato (+${pts} pt)` });
+    } catch (err) {
+      console.error(err);
       setToast({ show: true, text: 'Errore check‑in' });
     }
   };
