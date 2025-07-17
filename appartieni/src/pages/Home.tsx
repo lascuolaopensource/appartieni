@@ -2,7 +2,8 @@ import { useState, useCallback } from 'react';
 import {
   IonContent, IonHeader, IonList, IonPage,
   IonRefresher, IonRefresherContent,
-  IonTitle, IonToolbar
+  IonTitle, IonToolbar,
+  useIonRouter
 } from '@ionic/react';
 
 import { Service } from '../data/types';
@@ -16,6 +17,11 @@ import { heart } from 'ionicons/icons';
 const Home: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // const router = useIonRouter();
+  // if (!localStorage.getItem('tutorialSeen')) {
+  //   router.push('/tutorial', 'root');
+  // }
 
   // fetch function riusabile
   const loadServices = useCallback(async () => {
@@ -39,7 +45,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <IonPage id="home-page">
+    <IonPage id="home-page" className="page-safe">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Servizi</IonTitle>

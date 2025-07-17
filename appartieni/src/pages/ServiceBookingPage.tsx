@@ -56,22 +56,27 @@ const ServiceBookingPage: React.FC = () => {
   /* -------------------------------------------------------- */
   const handleBooking = async () => {
     if (!pb.authStore.isValid) {
-      setToast({ show: true, text: 'Devi essere loggato per prenotare' });
+      try { await pb.collection('users').authRefresh(); }
+      catch {
+        router.push('/auth', 'root')
+      }
+
       return;
     }
     setInserting(true);
     try {
       const record = await pb.collection('service_requests')
         .create({
-          service_id: sid,
-          user_id: pb.authStore.model?.id,
+          service: sid,
+          venue: vid,
+          user: pb.authStore.model?.id,
           remote: false,             // adjust if you have a toggle
           status: 'pending',
           message: message.trim()
         });
 
       // optional: decrement stock client‑side UI while backend hook does it server‑side
-      router.push(`/requests/${record.id}`, 'forward', 'push');
+      router.push(`/request-success/${record.id}`, 'forward', 'push');
     } catch (err) {
       console.error(err);
       setToast({ show: true, text: 'Prenotazione fallita' });

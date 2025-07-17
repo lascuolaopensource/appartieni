@@ -1,2 +1,102 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+/* global.css (or src/theme/variables.css) */
+/* ------------------------------------------------------------------
+   PALETTE PURIAPOINTS ✨
+   ------------------------------------------------------------------ */
+
+/* =========  BRAND COLORS  ========= */
+:root {
+  /* primary — giallo */
+  --ion-color-primary: #ffe00f;
+  --ion-color-primary-rgb: 255, 224, 15;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #e0c80d;
+  --ion-color-primary-tint: #ffe633;
+
+  /* secondary — viola */
+  --ion-color-secondary: #9369dd;
+  --ion-color-secondary-rgb: 147, 105, 221;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #825ccb;
+  --ion-color-secondary-tint: #a37be1;
+
+  /* tertiary — rosa acceso */
+  --ion-color-tertiary: #ff3e63;
+  --ion-color-tertiary-rgb: 255, 62, 99;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #e03758;
+  --ion-color-tertiary-tint: #ff5879;
+  body.qr-active,
+  body.qr-active ion-app,
+  body.qr-active ion-content {
+    background: transparent !important; /* let the camera show through */
+    --background: transparent !important; /* Ionic colour var */
+  }
+
+  .page-safe,
+  .page-safe ion-content,
+  .page-safe .scrollable-area {
+    /* adds whichever value is available */
+    padding-bottom: env(
+      safe-area-inset-bottom,
+      var(--ion-safe-area-bottom, 0px)
+    );
+  }
+}
+
+/* =========  STATUS COLORS  ========= */
+:root {
+  /* success — verde “ionico” leggermente custom */
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba63;
+  --ion-color-success-tint: #42d77a;
+
+  /* warning — giallo‑ambra */
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /* danger / error — rosso‑corallo */
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed5767;
+}
+
+/* =========  BACKGROUND  ========= */
+:root {
+  --ion-background-color: #f9f9f9;
+  --ion-background-color-rgb: 249, 249, 249;
+
+  --ion-text-color: #1c1c1d;
+  --ion-text-color-rgb: 28, 28, 29;
+}
+
+/* ------------------------------------------------------------------
+   DARK MODE  🌙  (automatic if prefers-color-scheme: dark)
+   ------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* base background */
+    --ion-background-color: #121212;
+    --ion-background-color-rgb: 18, 18, 18;
+
+    /* text */
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+
+    /* you can also tweak tints/shades for dark if needed */
+  }
+}
